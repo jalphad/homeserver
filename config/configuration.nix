@@ -25,7 +25,7 @@
       }
     ];
     defaultGateway = "192.168.178.1";
-    nameservers = "192.168.178.1";
+    nameservers = [ "192.168.178.1" ];
     firewall = {
       enable = true;
       allowedTCPPorts = [ 2022 6443 ];
