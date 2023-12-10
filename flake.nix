@@ -8,7 +8,7 @@
 
   outputs = { nixpkgs, nixpkgs-unstable, ... }: {
     nixosConfigurations = {
-      mynix = nixpkgs.lib.nixosSystem {
+      homeserver = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ({ config, pkgs, ... }:
