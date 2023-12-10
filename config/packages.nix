@@ -5,5 +5,7 @@
     vim
     git
     curl
+    k3s
+    cilium-cli
   ];
 }

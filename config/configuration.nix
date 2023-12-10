@@ -26,7 +26,7 @@
     nameservers = "192.168.178.1";
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 2022 ];
+      allowedTCPPorts = [ 2022 6443 ];
       allowedUDPPorts = [ ];
     };
   };
@@ -39,6 +39,8 @@
     font = "Lat2-Terminus16";
     keyMap = "us";
   };
+
+  systemd.services.k3s.path = [ pkgs.ipset ];
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
