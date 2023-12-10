@@ -10,7 +10,7 @@
 
   boot.initrd.availableKernelModules = [ "vmd" "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "dm_raid" "dm_cache" "dm_cache_mq" "dm_cache_smq" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
@@ -22,6 +22,16 @@
     { device = "/dev/disk/by-label/boot";
       fsType = "vfat";
     };
+
+  fileSystems."/data/personal" = {
+    device = "/dev/disk/by-label/personal_data";
+    fsType = "btrfs";
+  };
+
+  fileSystems."/data/media" = {
+    device = "/dev/disk/by-label/media_data";
+    fsType = "btrfs";
+  };
 
   swapDevices =
     [ { device = "/dev/disk/by-label/swap"; }
