@@ -51,8 +51,8 @@
     package = pkgs.nix;
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      trustedUsers = [ "root" "@wheel" ];
-      allowedUsers = [ "root" "@wheel" ];
+      trusted-users = [ "root" "@wheel" ];
+      allowed-users = [ "root" "@wheel" ];
     };
     gc = {
       automatic = true;
