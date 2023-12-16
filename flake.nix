@@ -16,6 +16,7 @@
               overlay-unstable = final: prev: {
                 unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
               };
+              personalAccounts = ./config/users/personal-accounts.nix;
             in
             {
               nixpkgs.overlays = [ overlay-unstable ];
@@ -28,7 +29,7 @@
                   ./config/users.nix
                   ./config/services.nix
 #                  ./config/virtualisation.nix
-                ];
+                ] ++ (if lib.pathExists personalAccounts then [ personalAccounts ] else []);
             }
           )
         ];

@@ -1,13 +1,6 @@
 # Define user accounts. Don't forget to set a password with ‘passwd’.
-{ lib, ... }:
-
-let
-  path = users/personal-accounts.nix;
-  personal = if (builtins.pathExists path) then (import path) else {};
-  fnMerge = (import "${../helpers/merge.nix}"){lib=lib;};
-in
 {
-  users = fnMerge [ {
+  users = {
     users = {
       nixhome = {
         isNormalUser = true;
@@ -21,5 +14,5 @@ in
     groups = {
       ssh-users = {};
     };
-  } personal ];
+  };
 }
