@@ -1,2 +1,6 @@
+# IDE related files/folders
 .idea
 *.iml
+
+# Exclude settings for personal accounts
+./config/users/personal-accounts.nix
