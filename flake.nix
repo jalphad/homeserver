@@ -29,7 +29,7 @@
                   ./config/users.nix
                   ./config/services.nix
 #                  ./config/virtualisation.nix
-                ] ++ (if lib.pathExists personalAccounts then [ personalAccounts ] else []);
+                ] ++ (if builtins.pathExists personalAccounts then [ personalAccounts ] else []);
             }
           )
         ];
