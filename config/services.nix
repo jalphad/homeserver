@@ -68,8 +68,10 @@
       role = "server";
       extraFlags = toString[
 #        "--kubelet-arg=v=4"
-        "--cluster-cidr 172.16.0.0/16"
+        "--cluster-cidr 172.16.0.0/24"
         "--flannel-backend=none"
+        "--no-flannel"
+        "--disable-kube-proxy"
         "--disable-network-policy"
       ];
     };
