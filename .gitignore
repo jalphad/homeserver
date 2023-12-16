@@ -3,4 +3,4 @@
 *.iml
 
 # Exclude settings for personal accounts
-./config/users/personal-accounts.nix
+config/users/personal-accounts.nix
