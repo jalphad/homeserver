@@ -67,10 +67,10 @@
       enable = true;
       role = "server";
       extraFlags = toString[
-#        "--kubelet-arg=v=4"
-        "--cluster-cidr 172.16.0.0/24"
+#        "--kubelet-arg=v=4" # verbosity level
+        "--cluster-cidr=10.42.0.0/16"
+        "--service-cidr=10.43.0.0/16"
         "--flannel-backend=none"
-        "--no-flannel"
         "--disable-kube-proxy"
         "--disable-network-policy"
       ];
