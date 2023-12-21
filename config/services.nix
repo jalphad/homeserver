@@ -76,7 +76,13 @@ in
       enable = true;
       openFirewall = true;
       shares = {
-
+        files = {
+          path = "/data/personal";
+          "read only" = false;
+          browseable = "yes";
+          "guest ok" = "no";
+          comment = "Share for documents";
+        };
       };
     };
     adguardhome = {
