@@ -4,3 +4,6 @@
 
 # Exclude settings for personal accounts
 config/users/personal-accounts.nix
+
+# Exclude secrets
+.secrets
