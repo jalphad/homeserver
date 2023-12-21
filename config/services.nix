@@ -60,7 +60,7 @@ in
               code = 6;
               space = "dhcp4";
               csv-format = true;
-              data = "192.168.178.1";
+              data = "192.168.178.2";
             }
             {
               name = "domain-name";
@@ -83,8 +83,8 @@ in
       enable = true;
       settings = {
         upstream_dns = [ "1.1.1.1:53" ];
+        rewrites = dnsRecords;
       };
-      rewrites = dnsRecords;
     };
     # printing.enable = true;
   };
