@@ -17,11 +17,21 @@
         createHome = true;
         uid = 10001;
       };
+      portainer = {
+        isNormalUser = true;
+        group = "portainer";
+        extraGroups = [ "docker" ];
+        createHome = true;
+        uid = 10002;
+      };
     };
     groups = {
       ssh-users = {};
       traefik = {
         gid = 10001;
+      };
+      portainer = {
+        gid = 10002;
       };
     };
   };
