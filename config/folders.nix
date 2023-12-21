@@ -6,9 +6,10 @@
       mkdir -m 775 -p /data/media/storage/downloads/movies
       mkdir -m 775 -p /data/media/storage/downloads/music
       mkdir -m 775 -p /data/media/storage/downloads/shows
-      mkdir -m 775 -p /data/media/storage/movies
-      mkdir -m 775 -p /data/media/storage/music
-      mkdir -m 775 -p /data/media/storage/shows
+      mkdir -m 775 -p /data/media/storage/organized
+      mkdir -m 775 -p /data/media/storage/organized/movies
+      mkdir -m 775 -p /data/media/storage/organized/music
+      mkdir -m 775 -p /data/media/storage/organized/shows
 
       mkdir -m 775 -p /data/media/temp
       mkdir -m 775 -p /data/media/temp/blackhole
