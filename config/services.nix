@@ -82,8 +82,12 @@ in
     adguardhome = {
       enable = true;
       settings = {
-        upstream_dns = [ "1.1.1.1:53" ];
-        rewrites = dnsRecords;
+        dns = {
+          upstream_dns = [ "1.1.1.1" ];
+        };
+        filtering = {
+          rewrites = dnsRecords;
+        };
       };
     };
     # printing.enable = true;
