@@ -28,7 +28,7 @@
                   ./config/packages.nix
                   ./config/users.nix
                   ./config/services.nix
-#                  ./config/virtualisation.nix
+                  ./config/virtualisation.nix
                 ] ++ (if builtins.pathExists personalAccounts then [ personalAccounts ] else []);
             }
           )
