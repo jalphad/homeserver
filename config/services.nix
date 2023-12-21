@@ -1,4 +1,13 @@
 # List services that you want to enable:
+let
+  localDomain = "lan.mejora.dev";
+  dnsRecords = [
+    {
+      domain = "*.lan.mejora.dev";
+      answer = "192.168.178.2";
+    }
+  ];
+in
 {
   services = {
     openssh = {
@@ -57,30 +66,25 @@
               name = "domain-name";
               code = 15;
               space = "dhcp4";
-              data = "lan.mejora.dev";
+              data = localDomain;
             }
           ];
         };
       };
     };
-#    k3s = {
-#      enable = true;
-#      role = "server";
-#      extraFlags = toString[
-##        "--kubelet-arg=v=4" # verbosity level
-#        "--cluster-cidr=10.42.0.0/16"
-#        "--service-cidr=10.43.0.0/16"
-#        "--flannel-backend=none"
-#        "--disable-kube-proxy"
-#        "--disable-network-policy"
-#      ];
-#    };
     samba = {
       enable = true;
       openFirewall = true;
       shares = {
 
       };
+    };
+    adguardhome = {
+      enable = true;
+      settings = {
+        upstream_dns = [ "1.1.1.1:53" ];
+      };
+      rewrites = dnsRecords;
     };
     # printing.enable = true;
   };
