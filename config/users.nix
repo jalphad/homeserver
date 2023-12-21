@@ -15,11 +15,14 @@
         group = "traefik";
         extraGroups = [ "docker" ];
         createHome = true;
+        uid = 10001;
       };
     };
     groups = {
       ssh-users = {};
-      traefik = {};
+      traefik = {
+        gid = 10001;
+      };
     };
   };
 }
