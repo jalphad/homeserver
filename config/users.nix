@@ -12,12 +12,14 @@
       };
       traefik = {
         isNormalUser = true;
+        group = "traefik";
         extraGroups = [ "docker" ];
         createHome = true;
       };
     };
     groups = {
       ssh-users = {};
+      traefik = {};
     };
   };
 }
