@@ -16,7 +16,7 @@
               overlay-unstable = final: prev: {
                 unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
               };
-              personalAccounts = /etc/nixos/config/users/personal-accounts.nix;
+              personalAccounts = /etc/homeserver/config/personal-accounts.nix;
             in
             {
               nixpkgs.overlays = [ overlay-unstable ];
