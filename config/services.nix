@@ -85,6 +85,13 @@ in
           "guest ok" = "no";
           comment = "Share for documents";
         };
+        media = {
+          path = "/data/media/storage/organized";
+          "read only" = true;
+          browseable = "yes";
+          "guest ok" = "no";
+          comment = "Share for media";
+        };
       };
     };
     adguardhome = {
