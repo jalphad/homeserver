@@ -30,6 +30,11 @@
         createHome = true;
         uid = 10003;
       };
+      unifi = {
+        isNormalUser = true;
+        createHome = true;
+        uid = 10004;
+      };
     };
     groups = {
       ssh-users = {};
