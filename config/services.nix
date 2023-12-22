@@ -27,6 +27,8 @@ in
             interfaces = [
               "enp2s0"
             ];
+            service-sockets-max-retries = 10;
+            service-sockets-retry-wait-time = 5000;
           };
           lease-database = {
             name = "/var/lib/kea/dhcp4.leases";
