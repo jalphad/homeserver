@@ -26,7 +26,8 @@
       };
       jellyfin = {
         isNormalUser = true;
-        createHome = false;
+        group = "media";
+        createHome = true;
         uid = 10003;
       };
     };
@@ -38,7 +39,9 @@
       portainer = {
         gid = 10002;
       };
-      media = {};
+      media = {
+        gid = 10003;
+      };
     };
   };
 }
