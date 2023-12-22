@@ -29,7 +29,7 @@
     nameservers = [ "192.168.178.1" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 2022 ];
+      allowedTCPPorts = [ 2022 8096 ];
       allowedUDPPorts = [ 53 ];
     };
   };
