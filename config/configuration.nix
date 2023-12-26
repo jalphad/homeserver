@@ -28,8 +28,8 @@
     defaultGateway = "192.168.178.1";
     nameservers = [ "192.168.178.1" ];
     firewall = {
-      enable = true;
-      allowedTCPPorts = [ 2022 8096 ];
+      enable = false;
+      allowedTCPPorts = [ 2022 8096 1900 7359];
       allowedUDPPorts = [ 53 ];
     };
   };
