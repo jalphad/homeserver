@@ -35,6 +35,19 @@
         createHome = true;
         uid = 10004;
       };
+      paperless = {
+        isNormalUser = true;
+        group = "paperless";
+        createHome = false;
+        uid = 10005;
+      };
+      scanner = {
+        isNormalUser = true;
+        extraGroups = [ "paperless" ];
+        createHome = false;
+        uid = 10006;
+        hashedPassword = "$y$j9T$yT3mdjPQXc2foIJ5uNIub/$W0L76npj.vYIdsE/jnycGngw5MxMjdBrM2FiyjpHiLD";
+      };
     };
     groups = {
       ssh-users = {};
@@ -46,6 +59,9 @@
       };
       media = {
         gid = 10003;
+      };
+      paperless = {
+        gid = 10004;
       };
     };
   };

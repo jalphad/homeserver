@@ -79,7 +79,7 @@ in
       openFirewall = true;
       shares = {
         files = {
-          path = "/data/personal";
+          path = "/data/personal/share";
           "read only" = false;
           browseable = "yes";
           "guest ok" = "no";
@@ -91,6 +91,13 @@ in
           browseable = "yes";
           "guest ok" = "no";
           comment = "Share for media";
+        };
+        scans = {
+          path = "/data/personal/scans";
+          "read only" = false;
+          browseable = "yes";
+          "guest ok" = "no";
+          comment = "Share for network scanner";
         };
       };
     };
