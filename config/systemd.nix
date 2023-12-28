@@ -8,18 +8,18 @@
           Requires = "network-online.target";
         };
         serviceConfig = {
-          User = keycloak;
-          RemainAfterExit = true;
-          Type = oneshot;
-          TimeoutStartSec = 0;
+          User = "keycloak";
+          RemainAfterExit = "true";
+          Type = "oneshot";
+          TimeoutStartSec = "0";
           WorkingDirectory = /home/keycloak;
           ExecStartPre = [
             "-/run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml down -v"
             "-/run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml rm -v"
             "-/run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml pull"
           ];
-          ExecStart = /etc/nixos/resources/scripts/ssocert.sh;
-          ExecStop = /run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml down -v;
+          ExecStart = "/etc/nixos/resources/scripts/ssocert.sh";
+          ExecStop = "/run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml down -v";
         };
         wantedBy = [ "multi-user.target" ];
       };
