@@ -1,0 +1,13 @@
+[Unit]
+Description=Daily renew certificate if required
+After=docker.service network-online.target
+Requires=network-online.target
+
+[Timer]
+OnCalendar==*-*-* 21:09
+RandomizedDelaySec=1h
+AccuracySec=2h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

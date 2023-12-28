@@ -1,0 +1,10 @@
+version: "2.4"
+services:
+  lego:
+    image: goacme/lego
+    command: ${LEGO_ARG}
+    environment:
+      TRANSIP_ACCOUNT_NAME: mejora
+      TRANSIP_PRIVATE_KEY_PATH: /keycloak/letsencrypt/keys/transip.key
+    volumes:
+      - /home/keycloak:/keycloak
