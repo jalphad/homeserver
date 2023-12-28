@@ -37,7 +37,7 @@
           AccuracySec = "2h";
           Persistent = "true";
         };
-        WantedBy= [ "multi-user.target" ];
+        wantedBy= [ "multi-user.target" ];
       };
     };
   };
