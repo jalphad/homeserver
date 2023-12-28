@@ -48,6 +48,23 @@
         uid = 10006;
         hashedPassword = "$y$j9T$yT3mdjPQXc2foIJ5uNIub/$W0L76npj.vYIdsE/jnycGngw5MxMjdBrM2FiyjpHiLD";
       };
+      nextcloud = {
+        isNormalUser = true;
+        createHome = false;
+        uid = 10007;
+        hashedPassword = "$y$j9T$Me.q9mQcb9PLZx6PmOb3a1$dBDX7BMwkX/YJWRlhDNOByrGjVzh06d6yYhg16.5C2B";
+      };
+      mediamgmt = {
+        isNormalUser = true;
+        createHome = true;
+        group = "media";
+        uid = 10008;
+      };
+      keycloak = {
+        isNormalUser = true;
+        createHome = true;
+        uid = 10009;
+      };
     };
     groups = {
       ssh-users = {};
