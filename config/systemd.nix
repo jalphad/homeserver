@@ -13,9 +13,11 @@
           Type = oneshot;
           TimeoutStartSec = 0;
           WorkingDirectory = /home/keycloak;
-          ExecStartPre = /run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml down -v;
-          ExecStartPre = /run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml rm -v;
-          ExecStartPre = /run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml pull;
+          ExecStartPre = [
+            "-/run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml down -v"
+            "-/run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml rm -v"
+            "-/run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml pull"
+          ];
           ExecStart = /etc/nixos/resources/scripts/ssocert.sh;
           ExecStop = /run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml down -v;
         };
