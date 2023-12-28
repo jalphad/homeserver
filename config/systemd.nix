@@ -8,7 +8,6 @@
           Requires = "network-online.target";
         };
         serviceConfig = {
-          User = "keycloak";
           RemainAfterExit = "true";
           Type = "oneshot";
           TimeoutStartSec = "0";
