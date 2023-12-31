@@ -8,6 +8,7 @@
           Requires = "network-online.target";
         };
         serviceConfig = {
+          Environment="PATH=/run/current-system/sw/bin";
           RemainAfterExit = "true";
           Type = "oneshot";
           TimeoutStartSec = "0";

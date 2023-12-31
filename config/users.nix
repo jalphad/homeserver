@@ -65,6 +65,11 @@
         createHome = true;
         uid = 10009;
       };
+      dashboard = {
+        isNormalUser = true;
+        createHome = true;
+        uid = 10010;
+      };
     };
     groups = {
       ssh-users = {};

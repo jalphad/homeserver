@@ -17,7 +17,7 @@
       mkdir -m 775 -p /data/media/temp/blackhole/music
       mkdir -m 775 -p /data/media/temp/blackhole/shows
       mkdir -m 775 -p /data/media/temp/processing
-      chown -R root:media /data/media
+      chown -R mediamgmt:media /data/media
       chown root:users /data/personal
       chmod 775 /data/personal
     '';
