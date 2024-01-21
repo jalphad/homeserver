@@ -26,18 +26,11 @@
     };
     timers = {
       ssocert = {
-        unitConfig = {
-          Description = "Daily renew certificate if required";
-          After = "docker.service network-online.target";
-          Requires = "network-online.target";
-        };
         timerConfig = {
-          OnCalendar = "*-*-* 21:09";
+          OnCalendar = "21:09";
           RandomizedDelaySec = "1h";
           AccuracySec = "2h";
-          Persistent = "true";
         };
-        wantedBy= [ "multi-user.target" ];
       };
     };
   };
