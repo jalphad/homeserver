@@ -24,9 +24,8 @@
         createHome = true;
         uid = 10002;
       };
-      jellyfin = {
+      lldap = {
         isNormalUser = true;
-        group = "media";
         createHome = true;
         uid = 10003;
       };
@@ -56,9 +55,10 @@
       };
       mediamgmt = {
         isNormalUser = true;
-        createHome = true;
+        createHome = false;
         group = "media";
         uid = 10008;
+        home = "/data/media/mediamgmt";
       };
       keycloak = {
         isNormalUser = true;
@@ -69,6 +69,11 @@
         isNormalUser = true;
         createHome = true;
         uid = 10010;
+      };
+      radius = {
+        isNormalUser = true;
+        createHome = true;
+        uid = 10011;
       };
     };
     groups = {
@@ -84,6 +89,9 @@
       };
       paperless = {
         gid = 10004;
+      };
+      lldap = {
+        gid = 10005;
       };
     };
   };

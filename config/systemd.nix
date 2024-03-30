@@ -12,7 +12,7 @@
           RemainAfterExit = "true";
           Type = "oneshot";
           TimeoutStartSec = "0";
-          WorkingDirectory = /home/keycloak;
+          WorkingDirectory = "/home/keycloak";
           ExecStartPre = [
             "-/run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml down -v"
             "-/run/current-system/sw/bin/docker compose -f /etc/nixos/resources/docker-compose/lego.yml rm -v"
