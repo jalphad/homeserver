@@ -13,5 +13,6 @@ in
     git
     curl
     unfree-p7zip
+    tmux
   ];
 }
