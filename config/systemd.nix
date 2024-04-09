@@ -28,8 +28,8 @@
       ssocert = {
         timerConfig = {
           OnCalendar = "21:09";
-          RandomizedDelaySec = "1h";
-          AccuracySec = "2h";
+          RandomizedDelaySec = "0";
+          Persistent = "true"
         };
       };
     };
