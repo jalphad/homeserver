@@ -48,6 +48,23 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  nixpkgs.overlays = [
+    (final: prev:
+      {
+        # nixpkgs:/pkgs/development/libraries/openldap
+        openldap = prev.openldap.overrideAttrs (_: rec {
+            extraContribModules = [
+              # https://git.openldap.org/openldap/openldap/-/tree/master/contrib/slapd-modules
+              "passwd/sha2"
+              "passwd/pbkdf2"
+              "passwd/totp"
+              "smbk5pwd"
+            ];
+        })
+      }
+    )
+  ];
+
   nix = {
     package = pkgs.nix;
     settings = {
