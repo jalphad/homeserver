@@ -13,13 +13,36 @@
         modules = [
           ({ config, pkgs, ... }:
             let
-              overlay-unstable = final: prev: {
+              overlay-custom = final: prev: rec {
                 unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
+
+                heimdal-modified = unstable.heimdal.overrideAttrs ({postInstall ? "", ...}: {
+                  postInstall = postInstall + ''
+                  cp include/heim_threads.h $dev/include
+                  '';
+                });
+
+                heimdal-noldap = heimdal-modified.override {
+                  withOpenLDAP = false;
+                };
+
+                # nixpkgs:/pkgs/development/libraries/openldap
+                openldap = unstable.openldap.overrideAttrs (a: {
+                  doCheck = true;
+                  buildInputs = a.buildInputs ++ [heimdal-noldap];
+
+                  extraContribModules = a.extraContribModules ++ [
+                    "smbk5pwd"
+                  ];
+                });
+
+                samba = prev.samba.override {
+                  enableLDAP = true;
+                };
               };
-              personalAccounts = /etc/homeserver/config/personal-accounts.nix;
             in
             {
-              nixpkgs.overlays = [ overlay-unstable ];
+              nixpkgs.overlays = [ overlay-custom ];
 
               imports =
                 [
@@ -31,7 +54,7 @@
                   ./config/virtualisation.nix
                   ./config/folders.nix
                   ./config/systemd.nix
-                ] ++ (if builtins.pathExists personalAccounts then [ personalAccounts ] else []);
+                ];
             }
           )
         ];
