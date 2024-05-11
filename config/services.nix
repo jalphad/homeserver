@@ -1,3 +1,5 @@
+{pkgs,...}:
+
 # List services that you want to enable:
 let
   localDomain = "lan.mejora.dev";
@@ -7,6 +9,7 @@ let
       answer = "192.168.178.2";
     }
   ];
+  hashFn = import helpers/pwhash.nix {pkgs=pkgs;}; 
 in
 {
   services = {
@@ -77,6 +80,20 @@ in
     samba = {
       enable = true;
       openFirewall = true;
+      extraConfig = ''
+        netbios name = HOMESERVER
+        workgroup = MEJORA
+        passdb backend = ldapsam:ldap://localhost
+        ldap admin dn = cn=admin,dc=lan,dc=mejora,dc=dev
+        ldap suffix = dc=lan,dc=mejora,dc=dev
+        ldap user suffix = ou=users
+        ldap group suffix = ou=groups
+        ldap machine suffix = ou=computers
+        ldap delete dn = no
+        ldap ssl = no
+        log file = /var/log/samba/log.session
+        log level = 2
+      '';
       shares = {
         files = {
           path = "/data/personal/share";
@@ -123,10 +140,20 @@ in
         };
 
         children = {
+          "cn=module{0}".attrs = {
+            objectClass = "olcModuleList";
+            cn = "module{0}";
+            olcModulePath = "${pkgs.openldap}/lib/modules";
+            olcModuleLoad = [ "{1}pw-sha2.so" "{2}smbk5pwd" ];
+          };
+
           "cn=schema".includes = [
             "${pkgs.openldap}/etc/schema/core.ldif"
             "${pkgs.openldap}/etc/schema/cosine.ldif"
             "${pkgs.openldap}/etc/schema/inetorgperson.ldif"
+            "${pkgs.openldap}/etc/schema/nis.ldif"
+            "/etc/nixos/resources/config/openldap/schemas/krb5-kdc.ldif"
+            "/etc/nixos/resources/config/openldap/schemas/samba.ldif"
           ];
 
           "olcDatabase={1}mdb" = {
@@ -136,11 +163,11 @@ in
               olcDatabase = "{1}mdb";
               olcDbDirectory = "/var/lib/openldap/data";
 
-              olcSuffix = "dc=example,dc=com";
+              olcSuffix = "dc=lan,dc=mejora,dc=dev";
 
               /* your admin account, do not use writeText on a production system */
-              olcRootDN = "cn=admin,dc=example,dc=com";
-              olcRootPW.path = pkgs.writeText "olcRootPW" "pass";
+              olcRootDN = "cn=admin,dc=lan,dc=mejora,dc=dev";
+              olcRootPW.path = pkgs.writeText "olcRootPW" (hashFn "pass");
 
               olcAccess = [
                 /* custom access rules for userPassword attributes */
@@ -152,7 +179,7 @@ in
                 /* allow read on anything else */
                 ''{1}to *
                     by * read''
-              ];
+              ]; 
             };
 
             children = {
@@ -176,6 +203,12 @@ in
                 objectClass = [ "olcOverlayConfig" "olcRefintConfig" "top" ];
                 olcOverlay = "{4}refint";
                 olcRefintAttribute = "memberof member manager owner";
+              };
+              "olcOverlay={5}smbk5pwd".attrs = {
+                objectClass = [ "olcOverlayConfig" "olcSmbK5PwdConfig" ];
+                olcOverlay = "{5}smbk5pwd";
+                olcSmbK5PwdEnable= "samba";
+                olcSmbK5PwdMustChange= "0";
               };
             };
           };

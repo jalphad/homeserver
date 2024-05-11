@@ -2,8 +2,8 @@
 .idea
 *.iml
 
-# Exclude settings for personal accounts
-config/users/personal-accounts.nix
+# Exclude settings
+config/vars/settings.nix
 
 # Exclude secrets
 .secrets

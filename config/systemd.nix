@@ -26,10 +26,11 @@
     };
     timers = {
       ssocert = {
+        enable = true;
         timerConfig = {
-          OnCalendar = "21:09";
-          RandomizedDelaySec = "0";
-          Persistent = "true"
+          OnCalendar = "daily";
+          RandomizedDelaySec = "1h";
+          Persistent = "true";
         };
       };
     };

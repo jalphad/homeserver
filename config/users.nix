@@ -1,6 +1,19 @@
 # Define user accounts. Don't forget to set a password with ‘passwd’.
 {
   users = {
+    ldap = {
+      enable = true;
+      server = "ldap://localhost";
+      base = "dc=lan,dc=mejora,dc=dev";
+      bind = {
+        distinguishedName = "cn=admin,dc=lan,dc=mejora,dc=dev";
+        
+      };
+      daemon = {
+        enable = true;
+      };
+      nsswitch = true;
+    };
     users = {
       nixhome = {
         isNormalUser = true;

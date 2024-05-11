@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, settings, ... }:
 
 {
   # Use the systemd-boot EFI boot loader.
@@ -16,7 +16,7 @@
   };
 
   networking = {
-    hostName = "homeserver";
+    hostName = settings.hostname;
     domain = "lan.mejora.dev";
     useDHCP = false;
     interfaces.enp2s0.ipv4.addresses = [
@@ -43,27 +43,8 @@
     keyMap = "us";
   };
 
-  systemd.services.k3s.path = [ pkgs.ipset ];
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  nixpkgs.overlays = [
-    (final: prev:
-      {
-        # nixpkgs:/pkgs/development/libraries/openldap
-        openldap = prev.openldap.overrideAttrs (_: rec {
-            extraContribModules = [
-              # https://git.openldap.org/openldap/openldap/-/tree/master/contrib/slapd-modules
-              "passwd/sha2"
-              "passwd/pbkdf2"
-              "passwd/totp"
-              "smbk5pwd"
-            ];
-        })
-      }
-    )
-  ];
 
   nix = {
     package = pkgs.nix;
