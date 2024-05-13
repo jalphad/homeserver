@@ -67,8 +67,6 @@ recursiveMerge = attrList:
       else last values
     );
   in f [] attrList;
-
-
 in
 
 recursiveMerge
