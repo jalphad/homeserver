@@ -15,10 +15,8 @@ nixos-install --root /mnt --flake /mnt/etc/nixos#homeserver
 - Git pull latest update to `/etc/nixos`
 - Execute:
 ```nix
-sudo nixos-rebuild switch --flake /etc/nixos/#homeserver --impure
+sudo nixos-rebuild switch --flake /etc/nixos/#homeserver
 ```
-*Adding `--impure` because the personal-accounts.nix file is not part of the flake.*
-
 
 ## WIP
 ### More detailed description on setting up disks
@@ -52,7 +50,10 @@ https://jellyfin.org/docs/general/clients/web-config/#custom-menu-links
 ### LDAP
 Using OpenLDAP because it can be used as a backend for Samba
 
-Use `slaptest` to convert schema files to ldif files:
+Preferably use `schema2ldif` to convert schema files to ldif files.
+
+*Note: use of slaptest can result in weird import issues around invalid characters when loading the schema's*
+Using `slaptest` to convert schema files to ldif files:
 ```shell
 mkdir -p /tmp/ldif/out
 touch /tmp/ldif/conf
