@@ -53,20 +53,20 @@ in
               code = 3;
               space = "dhcp4";
               csv-format = true;
-              data = settings.services.dhcp.routers;
+              data = settings.services.dhcp.options.routers;
             }
             {
               name = "domain-name-servers";
               code = 6;
               space = "dhcp4";
               csv-format = true;
-              data = settings.services.dhcp.nameservers;
+              data = settings.services.dhcp.options.nameservers;
             }
             {
               name = "domain-name";
               code = 15;
               space = "dhcp4";
-              data = settings.services.dhcp.domain;
+              data = settings.services.dhcp.options.domain;
             }
           ];
         };
