@@ -1,13 +1,18 @@
+{pkgs, settings,...}:
+
 # Define user accounts. Don't forget to set a password with ‘passwd’.
+let
+  ldapSuffixFn = import ../helpers/ldapsuffix.nix {lib=pkgs.lib;};
+  ldapSuffix = ldapSuffixFn settings.domain;
+in 
 {
   users = {
     ldap = {
       enable = true;
       server = "ldap://localhost";
-      base = "dc=lan,dc=mejora,dc=dev";
+      base = ldapSuffix;
       bind = {
-        distinguishedName = "cn=admin,dc=lan,dc=mejora,dc=dev";
-        
+        distinguishedName = "cn=admin,${ldapSuffix}";
       };
       daemon = {
         enable = true;
@@ -17,10 +22,8 @@
     users = {
       nixhome = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "ssh-users" "docker" "media" ]; # Enable ‘sudo’ for the user.
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILk9J5Labk84GXRWOUBETbIhEw8kKq/jR5aISL52/HBH home@nixos"
-        ];
+        extraGroups = [ "wheel" "ssh-users" "docker" "media" ];
+        openssh.authorizedKeys.keys = settings.sshKeys;
         createHome = true;
       };
       traefik = {
@@ -36,11 +39,6 @@
         extraGroups = [ "docker" ];
         createHome = true;
         uid = 10002;
-      };
-      lldap = {
-        isNormalUser = true;
-        createHome = true;
-        uid = 10003;
       };
       unifi = {
         isNormalUser = true;
