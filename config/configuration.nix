@@ -17,16 +17,16 @@
 
   networking = {
     hostName = settings.hostname;
-    domain = "lan.mejora.dev";
+    domain = settings.domain;
     useDHCP = false;
     interfaces.enp2s0.ipv4.addresses = [
       {
-        address = "192.168.178.2";
-        prefixLength = 24;
+        address = settings.network.address;
+        prefixLength = settings.network.prefixLength;
       }
     ];
-    defaultGateway = "192.168.178.1";
-    nameservers = [ "192.168.178.2" ];
+    defaultGateway = settings.network.gateway;
+    nameservers = settings.network.dns;
     firewall = {
       enable = false;
       allowedTCPPorts = [ 2022 8096 1900 7359];
@@ -34,7 +34,7 @@
     };
   };
 
-  time.timeZone = "Europe/Amsterdam";
+  time.timeZone = settings.timezone;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
