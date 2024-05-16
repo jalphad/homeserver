@@ -1,15 +1,10 @@
-{pkgs,...}:
+{pkgs,settings,self,...}:
 
 # List services that you want to enable:
 let
-  localDomain = "lan.mejora.dev";
-  dnsRecords = [
-    {
-      domain = "*.lan.mejora.dev";
-      answer = "192.168.178.2";
-    }
-  ];
-  hashFn = import helpers/pwhash.nix {pkgs=pkgs;}; 
+  hashFn = import ../helpers/pwhash.nix {pkgs=pkgs;};
+  ldapSuffixFn = import ../helpers/ldapsuffix.nix {lib=pkgs.lib;};
+  ldapSuffix = ldapSuffixFn settings.domain;
 in
 {
   services = {
@@ -46,10 +41,10 @@ in
               id = 1;
               pools = [
                 {
-                  pool = "192.168.178.50 - 192.168.178.99";
+                  pool = settings.services.dhcp.pool;
                 }
               ];
-              subnet = "192.168.178.0/24";
+              subnet = settings.services.dhcp.subnet;
             }
           ];
           option-data = [
@@ -58,20 +53,20 @@ in
               code = 3;
               space = "dhcp4";
               csv-format = true;
-              data = "192.168.178.1";
+              data = settings.services.dhcp.routers;
             }
             {
               name = "domain-name-servers";
               code = 6;
               space = "dhcp4";
               csv-format = true;
-              data = "192.168.178.2";
+              data = settings.services.dhcp.nameservers;
             }
             {
               name = "domain-name";
               code = 15;
               space = "dhcp4";
-              data = localDomain;
+              data = settings.services.dhcp.domain;
             }
           ];
         };
@@ -81,18 +76,18 @@ in
       enable = true;
       openFirewall = true;
       extraConfig = ''
-        netbios name = HOMESERVER
-        workgroup = MEJORA
+        netbios name = ${settings.services.samba.netbios}
+        workgroup = ${settings.services.samba.workgroup}
         passdb backend = ldapsam:ldap://localhost
-        ldap admin dn = cn=admin,dc=lan,dc=mejora,dc=dev
-        ldap suffix = dc=lan,dc=mejora,dc=dev
+        ldap admin dn = cn=admin,${ldapSuffix}
+        ldap suffix = ${ldapSuffix}
         ldap user suffix = ou=users
         ldap group suffix = ou=groups
         ldap machine suffix = ou=computers
         ldap delete dn = no
         ldap ssl = no
         log file = /var/log/samba/log.session
-        log level = 2
+        log level = 1
       '';
       shares = {
         files = {
@@ -123,8 +118,8 @@ in
       openFirewall = true;
       settings = {
         dns = {
-          upstream_dns = [ "1.1.1.1" ];
-          rewrites = dnsRecords;
+          upstream_dns = settings.services.dns.upstream;
+          rewrites = settings.services.dns.records;
         };
       };
     };
@@ -152,8 +147,8 @@ in
             "${pkgs.openldap}/etc/schema/cosine.ldif"
             "${pkgs.openldap}/etc/schema/inetorgperson.ldif"
             "${pkgs.openldap}/etc/schema/nis.ldif"
-            "/etc/nixos/resources/config/openldap/schemas/krb5-kdc.ldif"
-            "/etc/nixos/resources/config/openldap/schemas/samba.ldif"
+            "${../resources/config/openldap/schemas/krb5-kdc.ldif}"
+            "${../resources/config/openldap/schemas/samba.ldif}"
           ];
 
           "olcDatabase={1}mdb" = {
@@ -163,11 +158,11 @@ in
               olcDatabase = "{1}mdb";
               olcDbDirectory = "/var/lib/openldap/data";
 
-              olcSuffix = "dc=lan,dc=mejora,dc=dev";
+              olcSuffix = ldapSuffix;
 
               /* your admin account, do not use writeText on a production system */
-              olcRootDN = "cn=admin,dc=lan,dc=mejora,dc=dev";
-              olcRootPW.path = pkgs.writeText "olcRootPW" (hashFn "pass");
+              olcRootDN = "cn=admin,${ldapSuffix}";
+              olcRootPW = hashFn settings.services.openldap.adminPw;
 
               olcAccess = [
                 /* custom access rules for userPassword attributes */
