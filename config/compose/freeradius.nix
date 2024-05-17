@@ -2,7 +2,7 @@
 
 with pkgs;
 let 
-  ldapSuffixFn = import ./helpers/ldapsuffix.nix {lib=pkgs.lib;};
+  ldapSuffixFn = import ../../helpers/ldapsuffix.nix {lib=pkgs.lib;};
   ldapSuffix = ldapSuffixFn settings.domain;
 in
 rec {
