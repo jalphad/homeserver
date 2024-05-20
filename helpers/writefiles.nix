@@ -6,7 +6,7 @@ let
     let
       f = builtins.foldl' (acc: elem:
         (acc + ''
-          echo "${elem.text}" > $out/${elem.name}
+          echo '${elem.text}' > $out/${elem.name}
         ''));
       script = writeShellScript "builder.sh" (f '''' fileInfoList);
     in

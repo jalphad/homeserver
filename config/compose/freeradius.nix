@@ -130,7 +130,7 @@ rec {
     '';
   };
   freeradiusMods = writeFiles "freeradiusmods" [modLdap modEap modMschap modPap modRadutmp];
-  siteHomeServer = writeTextFile {
+  siteHomeServer = {
     name = "home-server";
     text = ''
       server home-server {
@@ -179,7 +179,7 @@ rec {
       }
     '';
   };
-  siteInnerTunnel = writeTextFile {
+  siteInnerTunnel = {
     name = "inner-tunnel";
     text = ''
       server inner-tunnel {
