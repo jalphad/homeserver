@@ -39,7 +39,7 @@ in
           RemainAfterExit = "true";
           Type = "simple";
           TimeoutStartSec = "0";
-          WorkingDirectory = "/home/freeradius";
+          WorkingDirectory = "/home/radius";
           ExecStartPre = [
             "-/run/current-system/sw/bin/docker compose -f ${freeradius.compose} down -v"
             "-/run/current-system/sw/bin/docker compose -f ${freeradius.compose} rm -v"
