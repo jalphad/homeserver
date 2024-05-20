@@ -11,21 +11,21 @@ rec {
     name = "ldap";
     text = ''
       ldap {
-        # example - identity = 'cn=readonly,dc=example,dc=com'
-        identity = 'cn=admin,${ldapSuffix}'
+        # example - identity = "cn=readonly,dc=example,dc=com"
+        identity = "cn=admin,${ldapSuffix}"
 
-        # example - password = 'readonly'
-        password = '${settings.services.openldap.adminPw}'
+        # example - password = "readonly"
+        password = "${settings.services.openldap.adminPw}"
 
         # example - server = ldap://localhost
-        server = 'ldap://${settings.hostname}.${settings.domain}:389'
+        server = "ldap://${settings.hostname}.${settings.domain}:389"
 
-        # example - base_dn = 'dc=example,dc=com'
-        base_dn = '${ldapSuffix}'
+        # example - base_dn = "dc=example,dc=com"
+        base_dn = "${ldapSuffix}"
 
         update {
-          control:Password-With-Header	+= 'userPassword'
-          control:NT-Password		:= 'sambaNTPassword'
+          control:Password-With-Header	+= "userPassword"
+          control:NT-Password		:= "sambaNTPassword"
         }
 
         user {

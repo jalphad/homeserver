@@ -45,7 +45,7 @@ in
             "-/run/current-system/sw/bin/docker compose -f ${freeradius.compose} rm -v"
             "-/run/current-system/sw/bin/docker compose -f ${freeradius.compose} pull"
           ];
-          ExecStart = "/run/current-system/sw/bin/docker compose -f ${freeradius.compose} up";
+          ExecStart = "/run/current-system/sw/bin/docker compose -f ${freeradius.compose} up -d";
           ExecStop = "/run/current-system/sw/bin/docker compose -f ${freeradius.compose} down -v";
         };
         wantedBy = [ "multi-user.target" ];
