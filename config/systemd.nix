@@ -37,7 +37,7 @@ in
         serviceConfig = {
           Environment="PATH=/run/current-system/sw/bin";
           RemainAfterExit = "true";
-          Type = "oneshot";
+          Type = "simple";
           TimeoutStartSec = "0";
           WorkingDirectory = "/home/freeradius";
           ExecStartPre = [
@@ -45,7 +45,7 @@ in
             "-/run/current-system/sw/bin/docker compose -f ${freeradius.compose} rm -v"
             "-/run/current-system/sw/bin/docker compose -f ${freeradius.compose} pull"
           ];
-          ExecStart = "/run/current-system/sw/bin/docker compose -f ${freeradius.compose} up -v";
+          ExecStart = "/run/current-system/sw/bin/docker compose -f ${freeradius.compose} up";
           ExecStop = "/run/current-system/sw/bin/docker compose -f ${freeradius.compose} down -v";
         };
         wantedBy = [ "multi-user.target" ];
