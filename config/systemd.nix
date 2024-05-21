@@ -3,6 +3,7 @@
 let 
   freeradius = import ./compose/freeradius.nix {inherit pkgs settings;};
   media = import ./compose/media.nix {inherit pkgs settings;};
+  unifi = import ./compose/unifi.nix {inherit pkgs settings;};
 in
 {
   systemd = {
@@ -70,6 +71,28 @@ in
           ];
           ExecStart = "/run/current-system/sw/bin/docker compose -f ${media.compose} up -d";
           ExecStop = "/run/current-system/sw/bin/docker compose -f ${media.compose} down -v";
+        };
+        wantedBy = [ "multi-user.target" ];
+      };
+      unifi = {
+        unitConfig = {
+          Description = "Run Unifi in Docker";
+          After = "docker.service network-online.target";
+          Requires = "network-online.target";
+        };
+        serviceConfig = {
+          Environment="PATH=/run/current-system/sw/bin";
+          RemainAfterExit = "true";
+          Type = "simple";
+          TimeoutStartSec = "0";
+          WorkingDirectory = "/home/unifi";
+          ExecStartPre = [
+            "-/run/current-system/sw/bin/docker compose -f ${unifi.compose} down -v"
+            "-/run/current-system/sw/bin/docker compose -f ${unifi.compose} rm -v"
+            "-/run/current-system/sw/bin/docker compose -f ${unifi.compose} pull"
+          ];
+          ExecStart = "/run/current-system/sw/bin/docker compose -f ${unifi.compose} up -d";
+          ExecStop = "/run/current-system/sw/bin/docker compose -f ${unifi.compose} down -v";
         };
         wantedBy = [ "multi-user.target" ];
       };
