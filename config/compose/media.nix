@@ -62,7 +62,7 @@ rec {
     '';
     destination = "/config.json";
   };
-  compose = {
+  compose = (pkgs.formats.yaml {}).generate "media.yaml" {
     name = "media";
     services = {
       jellyfin = {
