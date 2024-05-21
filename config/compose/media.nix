@@ -105,12 +105,7 @@ rec {
           "/data/media/mediamgmt/jellyfin/config:/config"
           "/data/media/mediamgmt/jellyfin/cache:/cache"
           "/data/media/storage/organized:/media"
-          {
-            read_only = false;
-            source = "${jellyfinConfig}/config.json";
-            target = "/jellyfin/jellyfin-web/config.json";
-            type = "bind";
-          }
+          "${jellyfinConfig}/config.json:/jellyfin/jellyfin-web/config.json"
         ];
       };
       jellyseerr = {
