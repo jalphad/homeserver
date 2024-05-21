@@ -141,7 +141,6 @@ rec {
         }
 
         authorize {
-            filter_username
             eap {
                 ok = return
                 updated = return
