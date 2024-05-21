@@ -1,7 +1,8 @@
 {pkgs,settings,...}:
 
 let 
-  freeradius = import ./compose/freeradius.nix {pkgs=pkgs;settings=settings;};
+  freeradius = import ./compose/freeradius.nix {inherit pkgs settings;};
+  media = import ./compose/media.nix {inherit pkgs settings;};
 in
 {
   systemd = {
@@ -47,6 +48,28 @@ in
           ];
           ExecStart = "/run/current-system/sw/bin/docker compose -f ${freeradius.compose} up -d";
           ExecStop = "/run/current-system/sw/bin/docker compose -f ${freeradius.compose} down -v";
+        };
+        wantedBy = [ "multi-user.target" ];
+      };
+      media = {
+        unitConfig = {
+          Description = "Run media services in Docker";
+          After = "docker.service network-online.target";
+          Requires = "network-online.target";
+        };
+        serviceConfig = {
+          Environment="PATH=/run/current-system/sw/bin";
+          RemainAfterExit = "true";
+          Type = "simple";
+          TimeoutStartSec = "0";
+          WorkingDirectory = "/data/media/mediamgmt";
+          ExecStartPre = [
+            "-/run/current-system/sw/bin/docker compose -f ${media.compose} down -v"
+            "-/run/current-system/sw/bin/docker compose -f ${media.compose} rm -v"
+            "-/run/current-system/sw/bin/docker compose -f ${media.compose} pull"
+          ];
+          ExecStart = "/run/current-system/sw/bin/docker compose -f ${media.compose} up -d";
+          ExecStop = "/run/current-system/sw/bin/docker compose -f ${media.compose} down -v";
         };
         wantedBy = [ "multi-user.target" ];
       };
