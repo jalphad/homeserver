@@ -1,0 +1,9 @@
+keys:
+  - &remote age1ckm7m4gj87v6dk8lxjrkcgfyd5g6vewxqklnygmnm8mhn5qp850qyhz7j5
+  - &personal age1x0v505psn099k7mk33ecy9jrzzv5fu9xun9gtrcrdvn5jluz5dtswy5dzl
+creation_rules:
+  - path_regex: secrets/[^/]+\.(yaml|json|env|ini|sops)$
+    key_groups:
+      - age:
+          - *remote
+          - *personal

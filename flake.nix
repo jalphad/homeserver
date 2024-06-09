@@ -4,9 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { nixpkgs, nixpkgs-unstable, ... }:
+  outputs = { nixpkgs, nixpkgs-unstable, sops-nix, ... }:
     let
       system = "x86_64-linux";
       settings = import ./config/vars/settings.nix;
@@ -54,6 +55,18 @@
             ./config/folders.nix
             ./config/systemd.nix
             { _module.args = { inherit settings; };}
+            sops-nix.nixosModules.sops
+            {
+              sops = {
+                defaultSopsFile = ./secrets/secrets.yaml;
+                age.sshKeyPaths = ["/etc/ssh/sopsnix_ed25519"];
+                secrets = {
+                  "lego.key" = {};
+                  "traefik.key" = {};
+                  "keycloak.env" = {};
+                };
+              };
+            }
           ];
         };
       };

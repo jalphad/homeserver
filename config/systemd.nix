@@ -1,9 +1,10 @@
-{pkgs,settings,...}:
+{config, pkgs,settings,...}:
 
 let 
   freeradius = import ./compose/freeradius.nix {inherit pkgs settings;};
   media = import ./compose/media.nix {inherit pkgs settings;};
   unifi = import ./compose/unifi.nix {inherit pkgs settings;};
+  keycloak = import ./compose/keycloak.nix {inherit pkgs settings;};
 in
 {
   systemd = {
@@ -93,6 +94,28 @@ in
           ];
           ExecStart = "/run/current-system/sw/bin/docker compose -f ${unifi.compose} up -d";
           ExecStop = "/run/current-system/sw/bin/docker compose -f ${unifi.compose} down -v";
+        };
+        wantedBy = [ "multi-user.target" ];
+      };
+      keycloak = {
+        unitConfig = {
+          Description = "Run Keycloak in Docker";
+          After = "docker.service network-online.target";
+          Requires = "network-online.target";
+        };
+        serviceConfig = {
+          Environment="PATH=/run/current-system/sw/bin";
+          RemainAfterExit = "true";
+          Type = "simple";
+          TimeoutStartSec = "0";
+          WorkingDirectory = "/home/keycloak";
+          ExecStartPre = [
+            "-/run/current-system/sw/bin/docker compose -f ${keycloak.compose} down -v"
+            "-/run/current-system/sw/bin/docker compose -f ${keycloak.compose} rm -v"
+            "-/run/current-system/sw/bin/docker compose -f ${keycloak.compose} pull"
+          ];
+          ExecStart = "/run/current-system/sw/bin/docker compose -f ${keycloak.compose} --env-file ${config.sops.secrets."keycloak.env".path} up -d";
+          ExecStop = "/run/current-system/sw/bin/docker compose -f ${keycloak.compose} down -v";
         };
         wantedBy = [ "multi-user.target" ];
       };
