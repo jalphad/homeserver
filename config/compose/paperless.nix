@@ -1,7 +1,7 @@
 { pkgs, settings, ... }:
 
 {
-  compose = (pkgs.formats.yaml { }).generate "keycloak.yaml" {
+  compose = (pkgs.formats.yaml { }).generate "paperless.yaml" {
     networks = {
       traefik = {
         external = true;
@@ -82,6 +82,9 @@
           "/data/personal/scans:/usr/src/paperless/consume"
         ];
       };
+    };
+    volumes = {
+      redisdata = {};
     };
     version = "3.4";
   };
