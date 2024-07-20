@@ -5,6 +5,8 @@
     name = "keycloak";
     services = {
       keycloak = {
+        container_name = "keycloak";
+        depends_on = [ "postgres" ];
         command = [ "start" "--https-certificate-file=/opt/keycloak/data/certs/sso.${settings.domain}.crt" "--https-certificate-key-file=/opt/keycloak/data/certs/sso.${settings.domain}.key" "--hostname=sso.${settings.domain}" ];
         environment = {
           KC_DB = "postgres";
@@ -16,7 +18,7 @@
           KEYCLOAK_ADMIN = "\${KEYCLOAK_ADMIN}";
           KEYCLOAK_ADMIN_PASSWORD = "\${KEYCLOAK_ADMIN_PASSWORD}";
         };
-        image = "quay.io/keycloak/keycloak:23.0";
+        image = "quay.io/keycloak/keycloak:24.0";
         networks = [ "traefik" ];
         ports = [ "8443:8443" ];
         restart = "unless-stopped";
