@@ -2,6 +2,7 @@
 
 {
   compose = (pkgs.formats.yaml { }).generate "paperless.yaml" {
+    name = "paperless";
     networks = {
       traefik = {
         external = true;
@@ -85,6 +86,7 @@
     };
     volumes = {
       redisdata = {};
+      pgdata = {};
     };
     version = "3.4";
   };
