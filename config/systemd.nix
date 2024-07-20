@@ -5,6 +5,7 @@ let
   media = import ./compose/media.nix {inherit pkgs settings;};
   unifi = import ./compose/unifi.nix {inherit pkgs settings;};
   keycloak = import ./compose/keycloak.nix {inherit pkgs settings;};
+  paperless = import ./compose/paperless.nix {inherit pkgs settings;};
 in
 {
   systemd = {
@@ -116,6 +117,27 @@ in
           ];
           ExecStart = "/run/current-system/sw/bin/docker compose -f ${keycloak.compose} --env-file ${config.sops.secrets."keycloak.env".path} up -d";
           ExecStop = "/run/current-system/sw/bin/docker compose -f ${keycloak.compose} down -v";
+        };
+        wantedBy = [ "multi-user.target" ];
+      };
+      paperless = {
+        unitConfig = {
+          Description = "Run Paperless in Docker";
+          After = "docker.service network-online.target";
+          Requires = "network-online.target";
+        };
+        serviceConfig = {
+          Environment="PATH=/run/current-system/sw/bin";
+          RemainAfterExit = "true";
+          Type = "simple";
+          TimeoutStartSec = "0";
+          ExecStartPre = [
+            "-/run/current-system/sw/bin/docker compose -f ${paperless.compose} down -v"
+            "-/run/current-system/sw/bin/docker compose -f ${paperless.compose} rm -v"
+            "-/run/current-system/sw/bin/docker compose -f ${paperless.compose} pull"
+          ];
+          ExecStart = "/run/current-system/sw/bin/docker compose -f ${paperless.compose} up -d";
+          ExecStop = "/run/current-system/sw/bin/docker compose -f ${paperless.compose} down -v";
         };
         wantedBy = [ "multi-user.target" ];
       };
