@@ -31,7 +31,7 @@
           "--chromium-disable-javascript=true"
           "--chromium-allow-list=file:///tmp/.*"
         ];
-        image = "docker.io/gotenberg/gotenberg:7.10";
+        image = "docker.io/gotenberg/gotenberg:8";
         networks = [ "traefik" ];
         restart = "unless-stopped";
       };
