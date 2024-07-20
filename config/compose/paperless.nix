@@ -47,7 +47,6 @@
           "gotenberg"
           "tika"
         ];
-        env_file = "paperless.env";
         environment = {
           USERMAP_UID = "10005";
           PAPERLESS_OCR_LANGUAGES = "eng nld";
