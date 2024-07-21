@@ -84,9 +84,6 @@
         ];
       };
     };
-    volumes = {
-      redisdata = {};
-    };
     version = "3.4";
   };
 }
