@@ -13,7 +13,7 @@
         image = "docker.io/library/redis:7";
         networks = [ "traefik" ];
         restart = "unless-stopped";
-        volumes = [ "redisdata:/data" ];
+        volumes = [ "/data/personal/paperless-ngx/redis:/data" ];
       };
       db = {
         environment = {
@@ -24,7 +24,7 @@
         image = "docker.io/library/postgres:15";
         networks = [ "traefik" ];
         restart = "unless-stopped";
-        volumes = [ "pgdata:/var/lib/postgresql/data" ];
+        volumes = [ "/data/personal/paperless-ngx/db:/var/lib/postgresql/data" ];
       };
       gotenberg = {
         command = [
@@ -86,7 +86,6 @@
     };
     volumes = {
       redisdata = {};
-      pgdata = {};
     };
     version = "3.4";
   };
