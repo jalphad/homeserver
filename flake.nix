@@ -14,11 +14,11 @@
       overlay-custom = final: prev: rec {
         unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
 
-        heimdal-modified = unstable.heimdal.overrideAttrs ({postInstall ? "", ...}: {
+        heimdal-modified = (unstable.heimdal.overrideAttrs ({postInstall ? "", ...}: {
           postInstall = postInstall + ''
           cp include/heim_threads.h $dev/include
           '';
-        }).override {
+        })).override {
           withOpenLDAP = false;
         };
 
