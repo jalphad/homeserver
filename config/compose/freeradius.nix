@@ -1,5 +1,6 @@
 {pkgs,settings,...}:
 
+with pkgs;
 let
   ldapSuffixFn = import ../../helpers/ldapsuffix.nix {lib=pkgs.lib;};
   ldapSuffix = ldapSuffixFn settings.domain;
