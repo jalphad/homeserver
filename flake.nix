@@ -18,23 +18,21 @@
           postInstall = postInstall + ''
           cp include/heim_threads.h $dev/include
           '';
-        });
-
-        heimdal-noldap = heimdal-modified.override {
+        }).override {
           withOpenLDAP = false;
         };
 
         # nixpkgs:/pkgs/development/libraries/openldap
         openldap = unstable.openldap.overrideAttrs (a: {
           doCheck = true;
-          buildInputs = a.buildInputs ++ [heimdal-noldap];
+          buildInputs = a.buildInputs ++ [heimdal-modified];
 
           extraContribModules = a.extraContribModules ++ [
             "smbk5pwd"
           ];
         });
 
-        samba = prev.samba.override {
+        samba = unstable.samba.override {
           enableLDAP = true;
         };
       };
