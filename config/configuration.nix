@@ -54,9 +54,9 @@
       allowed-users = [ "root" "@wheel" ];
     };
     gc = {
-      automatic = true;
+      automatic = false;
       dates = "weekly"; # Mon *-*-* 00:00:00
-      options = "--delete-older-than +5 --max-freed $((64 * 1024**3))";
+      options = "--delete-older-than 90d --max-freed $((64 * 1024**3))";
     };
     optimise = {
       automatic = true;
