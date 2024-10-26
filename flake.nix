@@ -64,6 +64,7 @@
                   "lego.key" = {};
                   "traefik.key" = {};
                   "keycloak.env" = {};
+                  "paperless.env" = {};
                 };
               };
             }
