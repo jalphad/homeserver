@@ -136,7 +136,7 @@ in
             "-/run/current-system/sw/bin/docker compose -f ${paperless.compose} rm -v"
             "-/run/current-system/sw/bin/docker compose -f ${paperless.compose} pull"
           ];
-          ExecStart = "/run/current-system/sw/bin/docker compose -f ${paperless.compose} up -d";
+          ExecStart = "/run/current-system/sw/bin/docker compose -f ${paperless.compose} --env-file ${config.sops.secrets."paperless.env".path} up -d";
           ExecStop = "/run/current-system/sw/bin/docker compose -f ${paperless.compose} down -v";
         };
         wantedBy = [ "multi-user.target" ];
