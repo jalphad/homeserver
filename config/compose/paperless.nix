@@ -59,6 +59,8 @@
           PAPERLESS_TIKA_ENABLED = 1;
           PAPERLESS_TIKA_ENDPOINT = "http://tika:9998";
           PAPERLESS_TIKA_GOTENBERG_ENDPOINT = "http://gotenberg:3000";
+          PAPERLESS_APPS = "\${PAPERLESS_APPS}";
+          PAPERLESS_SOCIALACCOUNT_PROVIDERS = "\${PAPERLESS_SOCIALACCOUNT_PROVIDERS}";
         };
         healthcheck = {
           interval = "30s";
